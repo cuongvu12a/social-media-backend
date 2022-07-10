@@ -1,0 +1,50 @@
+type Query {
+  getAccountInfo: String!
+}
+
+type Mutation {
+  signIn(data: SignInInput!): AuthResponse!
+  signUp(data: SignUpInput!): AuthResponse!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input SignUpInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  birthday: DateTime
+  phoneNumber: String
+  accountName: String
+}
+
+type AccountResponse {
+  id: String!
+  identityNumber: String
+  accountName: String
+  firstName: String!
+  lastName: String!
+  email: String!
+  birthday: DateTime
+  phoneNumber: String
+  role: Role!
+  isActive: Boolean!
+
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type Token {
+  accessToken: String!
+  refreshToken: String
+}
+
+type AuthResponse {
+  account: AccountResponse!
+  token: Token!
+}
