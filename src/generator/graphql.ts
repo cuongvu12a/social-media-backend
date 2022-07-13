@@ -12,6 +12,10 @@ export enum Role {
     USER = "USER"
 }
 
+export enum FileCategory {
+    MAIN_PHOTO = "MAIN_PHOTO"
+}
+
 export class SignInInput {
     email: string;
     password: string;
@@ -35,6 +39,10 @@ export abstract class IMutation {
     abstract signIn(data: SignInInput): AuthResponse | Promise<AuthResponse>;
 
     abstract signUp(data: SignUpInput): AuthResponse | Promise<AuthResponse>;
+
+    abstract singleUpload(file: Upload): UploadFileResponse | Promise<UploadFileResponse>;
+
+    abstract multipleUpload(files: Upload[]): UploadFileResponse[] | Promise<UploadFileResponse[]>;
 }
 
 export class AccountResponse {
@@ -63,5 +71,11 @@ export class AuthResponse {
     token: Token;
 }
 
+export class UploadFileResponse {
+    filename: string;
+    mimetype: string;
+}
+
 export type DateTime = Date;
+export type Upload = any;
 type Nullable<T> = T | null;
