@@ -1,0 +1,8 @@
+enum Role {
+  ADMIN
+  USER
+}
+
+enum FileCategory {
+  MAIN_PHOTO
+}

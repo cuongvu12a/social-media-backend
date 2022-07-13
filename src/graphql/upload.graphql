@@ -1,0 +1,9 @@
+type Mutation {
+  singleUpload(file: Upload!): UploadFileResponse!
+  multipleUpload(files: [Upload!]!): [UploadFileResponse!]!
+}
+
+type UploadFileResponse {
+  filename: String!
+  mimetype: String!
+}

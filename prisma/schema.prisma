@@ -15,6 +15,10 @@ enum Role {
   USER
 }
 
+enum FileCategory {
+  MAIN_PHOTO
+}
+
 model Account {
   id                    String                  @id @default(uuid())
   identityNumber        String                  @unique
@@ -28,7 +32,22 @@ model Account {
   role                  Role
   isActive              Boolean                 @default(true)
 
+  files                 File[]
+
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   deletedAt             DateTime?
+}
+
+model File {
+  id  String  @id @default(uuid())
+  filename         String
+  mimetype         String
+  fileCategory     FileCategory
+  account          Account?        @relation(fields: [accountId], references: [id])
+  accountId        String?
+
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  deletedAt        DateTime?
 }

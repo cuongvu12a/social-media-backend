@@ -6,7 +6,8 @@ import { Account, Prisma } from '@prisma/client';
 import { JWT_EXPIRES_IN, JWT_SECRET } from 'src/constants';
 import { JwtPayload } from 'src/models';
 import { PrismaService } from 'src/prisma/prisma.service';
-
+import { makeModelIdentityNumber } from 'src/utils';
+import { ERROR, Exception } from 'src/utils';
 @Injectable()
 export class AccountService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
@@ -16,10 +17,10 @@ export class AccountService {
     const account: Account = await this.prisma.account.findFirst({
       where,
     });
-    if (!account) throw new Error();
+    if (!account) throw new Exception(ERROR.ACCOUNT_NOT_FOUND);
 
     const flag = await this.comparePassword(password, account.password);
-    if (!flag) throw new Error();
+    if (!flag) throw new Exception(ERROR.PASSWORD_NOT_VALID);
 
     delete account.password;
     return account;
@@ -34,7 +35,6 @@ export class AccountService {
     const account: Account = await this.prisma.account.create({
       data: accountCreateInput,
     });
-    if (!account) throw new Error();
     return account;
   }
 
@@ -60,4 +60,7 @@ export class AccountService {
     password,
     hash,
   ) => bcrypt.compare(password, hash);
+
+  makeAccountIdentityNumber: () => Promise<string> = () =>
+    makeModelIdentityNumber(this.prisma, 'account');
 }
