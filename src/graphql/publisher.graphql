@@ -1,0 +1,12 @@
+type Publisher {
+  id: String!
+  name: String!
+}
+
+type Mutation {
+  createPublisher(data: CreatePublisherInput!): Boolean!  
+}
+
+input CreatePublisherInput{
+  name: String!
+}

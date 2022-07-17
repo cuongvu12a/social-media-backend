@@ -1,3 +1,7 @@
 export * from './account/account.module'
 export * from './admin/admin.module'
+export * from './author/author.module'
+export * from './book/book.module'
+export * from './book-category/book-category.module'
+export * from './publisher/publisher.module'
 export * from './upload/upload.module'

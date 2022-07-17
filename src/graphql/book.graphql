@@ -1,0 +1,69 @@
+type Query {
+  getListBook(
+    pagination: PaginationInput
+    condition: GetListBookCondition
+  ): GetListBookResponse!
+  getBookById(bookId: String!): GetBookByIdResponse!
+}
+
+type Mutation {
+  createBook(data: CreateBookInput!): Boolean!
+}
+
+input GetListBookCondition {
+  orderType: OrderByType
+  orderBy: GetListBookOrderBy
+  searching: String
+  publishIds: [String]
+  authorIds: [String]
+  categoryIds: [String]
+}
+
+type GetListBookResponse {
+  data: [BookForGetListBookResponse!]!
+  pagination: Pagination!
+}
+
+type BookForGetListBookResponse {
+  id: String!
+  identityNumber: String!
+  title: String
+  releaseAt: DateTime
+
+  author: Author
+  publisher: Publisher
+  category: BookCategory
+
+  thumbnail: ObjFileOutput
+}
+
+type GetBookByIdResponse {
+  id: String!
+  identityNumber: String!
+  title: String
+  releaseAt: DateTime
+
+  author: Author
+  publisher: Publisher
+  category: BookCategory
+
+  thumbnail: ObjFileOutput
+
+  # detail
+  content: String
+  numberOfPages: Int
+  
+  ebook: ObjFileOutput
+}
+
+input CreateBookInput {
+  title: String!
+  content: String!
+  numberOfPages: Int
+  authorId: String
+  publishId: String
+  categoryId: String
+  releaseAt: DateTime
+  thumbnail: ObjFileInput
+  ebook: ObjFileInput
+}

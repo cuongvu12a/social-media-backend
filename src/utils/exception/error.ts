@@ -24,6 +24,22 @@ export const ERROR = {
     code: 3,
     message: 'Account info exist!'
   },
+  BOOK_NOT_FOUND: {
+    code: 4,
+    message: 'Book not found!'
+  },
+  AUTHOR_NOT_FOUND: {
+    code: 5,
+    message: 'Author not found!'
+  },
+  PUBLISHER_NOT_FOUND: {
+    code: 6,
+    message: 'Publisher not found!'
+  },
+  BOOK_CATEGORY_NOT_FOUND: {
+    code: 7,
+    message: 'Book category not found!'
+  },
 };
 
 export function getError(error: string) {

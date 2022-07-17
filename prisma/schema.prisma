@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -16,7 +17,8 @@ enum Role {
 }
 
 enum FileCategory {
-  MAIN_PHOTO
+  THUMBNAIL_BOOK
+  EBOOK
 }
 
 model Account {
@@ -40,14 +42,79 @@ model Account {
 }
 
 model File {
-  id  String  @id @default(uuid())
-  filename         String
-  mimetype         String
-  fileCategory     FileCategory
-  account          Account?        @relation(fields: [accountId], references: [id])
-  accountId        String?
+  id                  String          @id @default(uuid())
+  filename            String
+  mimetype            String
+  fileCategory        FileCategory
 
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
-  deletedAt        DateTime?
+  accountId           String?
+  account             Account?        @relation(fields: [accountId], references: [id])
+
+  bookId              String?
+  book                Book?           @relation(fields: [bookId], references: [id])
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model Author {
+  id                  String  @id @default(uuid())
+  name                String
+
+  books               Book[]
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model Publisher{
+  id                  String  @id @default(uuid())
+  name                String
+
+  books               Book[]
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model BookCategory {
+  id       String         @id @default(uuid())
+  parentId String?
+  name     String?
+  parent   BookCategory?  @relation("parentBookCategory", fields: [parentId], references: [id])
+  children BookCategory[] @relation("parentBookCategory")
+  books    Book[]         
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+
+model Book {
+  id                  String  @id @default(uuid())
+  identityNumber      String  @unique
+  title               String
+  content             String  @db.LongText()
+  numberOfPages       Int?
+
+  authorId            String? 
+  author              Author?  @relation(fields: [authorId], references: [id])
+
+  publishId           String?
+  publisher           Publisher? @relation(fields: [publishId], references: [id])
+
+  bookCategoryId      String?
+  bookCategory        BookCategory? @relation(fields: [bookCategoryId], references: [id])
+
+  file                File[]
+
+  releaseAt           DateTime? 
+  
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
 }

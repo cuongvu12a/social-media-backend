@@ -1,0 +1,12 @@
+type ObjFileOutput {
+  id: String!
+  filename: String!
+  mimetype: String!
+  fileCategory: FileCategory!
+}
+
+input ObjFileInput {
+  filename: String!
+  mimetype: String!
+  fileCategory: FileCategory!
+}

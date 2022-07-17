@@ -1,8 +1,13 @@
 enum Role {
+  "ADMIN"
   ADMIN
+  "USER"
   USER
 }
 
 enum FileCategory {
-  MAIN_PHOTO
+  "THUMBNAIL_BOOK"
+  THUMBNAIL_BOOK
+  "EBOOK"
+  EBOOK
 }

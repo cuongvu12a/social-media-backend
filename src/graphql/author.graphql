@@ -1,0 +1,12 @@
+type Author {
+  id: String!
+  name: String!
+}
+
+type Mutation {
+  createAuthor(data: CreateAuthorInput!): Boolean!  
+}
+
+input CreateAuthorInput{
+  name: String!
+}
