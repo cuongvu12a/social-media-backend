@@ -23,3 +23,14 @@ enum GetListBookOrderBy {
   "CREATED_AT"
   CREATED_AT
 }
+
+enum GetListPostOrderBy {
+  "IDENTITY_NUMBER"
+  IDENTITY_NUMBER
+  "TITLE"
+  TITLE
+  "AUTHOR"
+  AUTHOR
+  "CREATED_AT"
+  CREATED_AT
+}

@@ -19,6 +19,8 @@ enum Role {
 enum FileCategory {
   THUMBNAIL_BOOK
   EBOOK
+  MEDIA
+  MAIN_PHOTO
 }
 
 model Account {
@@ -53,6 +55,12 @@ model File {
   bookId              String?
   book                Book?           @relation(fields: [bookId], references: [id])
 
+  authorId            String?        @unique
+  author              Author?        @relation(fields: [authorId], references: [id])
+
+  postId              String?
+  post                Post?            @relation(fields: [postId], references: [id])
+
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt
   deletedAt           DateTime?
@@ -63,6 +71,8 @@ model Author {
   name                String
 
   books               Book[]
+  posts               Post[]
+  file                File?
 
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt
@@ -113,6 +123,22 @@ model Book {
   file                File[]
 
   releaseAt           DateTime? 
+  
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model Post {
+  id                  String  @id @default(uuid())
+  identityNumber      String  @unique
+  title               String
+  content             String  @db.LongText()
+
+  authorId            String? 
+  author              Author?  @relation(fields: [authorId], references: [id])
+
+  file                File[]
   
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt

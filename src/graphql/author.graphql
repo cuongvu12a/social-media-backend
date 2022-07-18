@@ -1,6 +1,7 @@
 type Author {
   id: String!
   name: String!
+  avatar: ObjFileOutput
 }
 
 type Mutation {
@@ -9,4 +10,5 @@ type Mutation {
 
 input CreateAuthorInput{
   name: String!
+  avatar: ObjFileInput
 }

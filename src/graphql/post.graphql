@@ -1,0 +1,38 @@
+type Query{
+  getListPost(
+    pagination: PaginationInput
+    condition: GetListPostCondition
+  ): GetListPostResponse!
+}
+
+type Mutation {
+  createPost(data: CreatePostInput!): Boolean!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  medias: [ObjFileInput]
+  authorId: String!
+}
+
+input GetListPostCondition {
+  orderType: OrderByType
+  orderBy: GetListPostOrderBy
+  searching: String
+  authorIds: [String]
+}
+
+type GetListPostResponse {
+  data: [PostForGetListPostResponse!]!
+  pagination: Pagination!
+}
+
+type PostForGetListPostResponse {
+  id: String!
+  identityNumber: String!
+  title: String
+  content: String
+  author: Author
+  medias: [ObjFileOutput]
+}

@@ -23,6 +23,13 @@ export enum GetListBookOrderBy {
     CREATED_AT = "CREATED_AT"
 }
 
+export enum GetListPostOrderBy {
+    IDENTITY_NUMBER = "IDENTITY_NUMBER",
+    TITLE = "TITLE",
+    AUTHOR = "AUTHOR",
+    CREATED_AT = "CREATED_AT"
+}
+
 export enum Role {
     ADMIN = "ADMIN",
     USER = "USER"
@@ -30,7 +37,9 @@ export enum Role {
 
 export enum FileCategory {
     THUMBNAIL_BOOK = "THUMBNAIL_BOOK",
-    EBOOK = "EBOOK"
+    EBOOK = "EBOOK",
+    MEDIA = "MEDIA",
+    MAIN_PHOTO = "MAIN_PHOTO"
 }
 
 export class SignInInput {
@@ -50,6 +59,7 @@ export class SignUpInput {
 
 export class CreateAuthorInput {
     name: string;
+    avatar?: Nullable<ObjFileInput>;
 }
 
 export class GetListBookCondition {
@@ -88,6 +98,20 @@ export class PaginationInput {
     size?: Nullable<number>;
 }
 
+export class CreatePostInput {
+    title: string;
+    content: string;
+    medias?: Nullable<Nullable<ObjFileInput>[]>;
+    authorId: string;
+}
+
+export class GetListPostCondition {
+    orderType?: Nullable<OrderByType>;
+    orderBy?: Nullable<GetListPostOrderBy>;
+    searching?: Nullable<string>;
+    authorIds?: Nullable<Nullable<string>[]>;
+}
+
 export class CreatePublisherInput {
     name: string;
 }
@@ -98,6 +122,8 @@ export abstract class IQuery {
     abstract getListBook(pagination?: Nullable<PaginationInput>, condition?: Nullable<GetListBookCondition>): GetListBookResponse | Promise<GetListBookResponse>;
 
     abstract getBookById(bookId: string): GetBookByIdResponse | Promise<GetBookByIdResponse>;
+
+    abstract getListPost(pagination?: Nullable<PaginationInput>, condition?: Nullable<GetListPostCondition>): GetListPostResponse | Promise<GetListPostResponse>;
 }
 
 export abstract class IMutation {
@@ -110,6 +136,8 @@ export abstract class IMutation {
     abstract createBook(data: CreateBookInput): boolean | Promise<boolean>;
 
     abstract createBookCategory(data: CreateBookCategoryInput): boolean | Promise<boolean>;
+
+    abstract createPost(data: CreatePostInput): boolean | Promise<boolean>;
 
     abstract createPublisher(data: CreatePublisherInput): boolean | Promise<boolean>;
 
@@ -147,6 +175,7 @@ export class AuthResponse {
 export class Author {
     id: string;
     name: string;
+    avatar?: Nullable<ObjFileOutput>;
 }
 
 export class GetListBookResponse {
@@ -197,6 +226,20 @@ export class Pagination {
     page?: Nullable<number>;
     size?: Nullable<number>;
     totalData?: Nullable<number>;
+}
+
+export class GetListPostResponse {
+    data: PostForGetListPostResponse[];
+    pagination: Pagination;
+}
+
+export class PostForGetListPostResponse {
+    id: string;
+    identityNumber: string;
+    title?: Nullable<string>;
+    content?: Nullable<string>;
+    author?: Nullable<Author>;
+    medias?: Nullable<Nullable<ObjFileOutput>[]>;
 }
 
 export class Publisher {

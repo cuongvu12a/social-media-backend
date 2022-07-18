@@ -10,4 +10,8 @@ enum FileCategory {
   THUMBNAIL_BOOK
   "EBOOK"
   EBOOK
+  "MEDIA"
+  MEDIA
+  "MAIN_PHOTO"
+  MAIN_PHOTO
 }
