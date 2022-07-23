@@ -40,6 +40,10 @@ export const ERROR = {
     code: 7,
     message: 'Book category not found!'
   },
+  FILM_CATEGORY_NOT_FOUND: {
+    code: 7,
+    message: 'FILM category not found!'
+  },
 };
 
 export function getError(error: string) {

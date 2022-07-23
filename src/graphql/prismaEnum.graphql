@@ -14,4 +14,8 @@ enum FileCategory {
   MEDIA
   "MAIN_PHOTO"
   MAIN_PHOTO
+  "FILM"
+  FILM
+  "TRAILER"
+  TRAILER
 }

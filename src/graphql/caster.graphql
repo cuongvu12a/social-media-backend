@@ -1,0 +1,14 @@
+type Caster {
+  id: String!
+  name: String!
+  avatar: ObjFileOutput
+}
+
+type Mutation {
+  createCaster(data: CreateCasterInput!): Boolean!  
+}
+
+input CreateCasterInput{
+  name: String!
+  avatar: ObjFileInput
+}

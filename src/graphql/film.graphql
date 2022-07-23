@@ -1,0 +1,60 @@
+type Mutation {
+  createFilm(data: CreateFilmInput!): Boolean!  
+}
+type Query{
+  getFilmById(filmId: String!): GetFilmByIdResponse!
+  getListFilm(
+    pagination: PaginationInput
+    condition: GetListFilmCondition
+  ): GetListFilmResponse!
+}
+
+input CreateFilmInput{
+  title: String!
+  subTitle: String!
+  description: String!
+  releaseAt: DateTime
+  categoryId: String
+  authorId: String
+  casterIds: [String]
+  film: ObjFileInput
+  trailer: ObjFileInput
+}
+
+type GetFilmByIdResponse {
+  title: String!
+  subTitle: String!
+  description: String!
+  releaseAt: DateTime
+  author: Author
+  casters: [Caster]
+  category: BookCategory
+  film: ObjFileOutput
+  trailer: ObjFileOutput
+}
+
+input GetListFilmCondition {
+  orderType: OrderByType
+  orderBy: GetListFilmOrderBy
+  searching: String
+  authorIds: [String]
+  casterIds: [String]
+  categoryIds: [String]
+}
+
+type GetListFilmResponse {
+  data: [FilmForGetListFilmResponse!]!
+  pagination: Pagination!
+}
+
+type FilmForGetListFilmResponse{
+  title: String!
+  subTitle: String!
+  description: String!
+  releaseAt: DateTime
+  author: Author
+  casters: [Caster]
+  category: BookCategory
+  film: ObjFileOutput
+  trailer: ObjFileOutput  
+}

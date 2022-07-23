@@ -30,6 +30,15 @@ export enum GetListPostOrderBy {
     CREATED_AT = "CREATED_AT"
 }
 
+export enum GetListFilmOrderBy {
+    TITLE = "TITLE",
+    SUBTITLE = "SUBTITLE",
+    AUTHOR = "AUTHOR",
+    CATEGORY = "CATEGORY",
+    RELEASE_AT = "RELEASE_AT",
+    CREATED_AT = "CREATED_AT"
+}
+
 export enum Role {
     ADMIN = "ADMIN",
     USER = "USER"
@@ -39,7 +48,9 @@ export enum FileCategory {
     THUMBNAIL_BOOK = "THUMBNAIL_BOOK",
     EBOOK = "EBOOK",
     MEDIA = "MEDIA",
-    MAIN_PHOTO = "MAIN_PHOTO"
+    MAIN_PHOTO = "MAIN_PHOTO",
+    FILM = "FILM",
+    TRAILER = "TRAILER"
 }
 
 export class SignInInput {
@@ -87,10 +98,40 @@ export class CreateBookCategoryInput {
     name: string;
 }
 
+export class CreateFilmCategoryInput {
+    name: string;
+}
+
+export class CreateCasterInput {
+    name: string;
+    avatar?: Nullable<ObjFileInput>;
+}
+
 export class ObjFileInput {
     filename: string;
     mimetype: string;
     fileCategory: FileCategory;
+}
+
+export class CreateFilmInput {
+    title: string;
+    subTitle: string;
+    description: string;
+    releaseAt?: Nullable<DateTime>;
+    categoryId?: Nullable<string>;
+    authorId?: Nullable<string>;
+    casterIds?: Nullable<Nullable<string>[]>;
+    film?: Nullable<ObjFileInput>;
+    trailer?: Nullable<ObjFileInput>;
+}
+
+export class GetListFilmCondition {
+    orderType?: Nullable<OrderByType>;
+    orderBy?: Nullable<GetListFilmOrderBy>;
+    searching?: Nullable<string>;
+    authorIds?: Nullable<Nullable<string>[]>;
+    casterIds?: Nullable<Nullable<string>[]>;
+    categoryIds?: Nullable<Nullable<string>[]>;
 }
 
 export class PaginationInput {
@@ -123,6 +164,10 @@ export abstract class IQuery {
 
     abstract getBookById(bookId: string): GetBookByIdResponse | Promise<GetBookByIdResponse>;
 
+    abstract getFilmById(filmId: string): GetFilmByIdResponse | Promise<GetFilmByIdResponse>;
+
+    abstract getListFilm(pagination?: Nullable<PaginationInput>, condition?: Nullable<GetListFilmCondition>): GetListFilmResponse | Promise<GetListFilmResponse>;
+
     abstract getListPost(pagination?: Nullable<PaginationInput>, condition?: Nullable<GetListPostCondition>): GetListPostResponse | Promise<GetListPostResponse>;
 }
 
@@ -136,6 +181,12 @@ export abstract class IMutation {
     abstract createBook(data: CreateBookInput): boolean | Promise<boolean>;
 
     abstract createBookCategory(data: CreateBookCategoryInput): boolean | Promise<boolean>;
+
+    abstract createFilmCategory(data: CreateFilmCategoryInput): boolean | Promise<boolean>;
+
+    abstract createCaster(data: CreateCasterInput): boolean | Promise<boolean>;
+
+    abstract createFilm(data: CreateFilmInput): boolean | Promise<boolean>;
 
     abstract createPost(data: CreatePostInput): boolean | Promise<boolean>;
 
@@ -215,11 +266,46 @@ export class BookCategory {
     parentName?: Nullable<string>;
 }
 
+export class Caster {
+    id: string;
+    name: string;
+    avatar?: Nullable<ObjFileOutput>;
+}
+
 export class ObjFileOutput {
     id: string;
     filename: string;
     mimetype: string;
     fileCategory: FileCategory;
+}
+
+export class GetFilmByIdResponse {
+    title: string;
+    subTitle: string;
+    description: string;
+    releaseAt?: Nullable<DateTime>;
+    author?: Nullable<Author>;
+    casters?: Nullable<Nullable<Caster>[]>;
+    category?: Nullable<BookCategory>;
+    film?: Nullable<ObjFileOutput>;
+    trailer?: Nullable<ObjFileOutput>;
+}
+
+export class GetListFilmResponse {
+    data: FilmForGetListFilmResponse[];
+    pagination: Pagination;
+}
+
+export class FilmForGetListFilmResponse {
+    title: string;
+    subTitle: string;
+    description: string;
+    releaseAt?: Nullable<DateTime>;
+    author?: Nullable<Author>;
+    casters?: Nullable<Nullable<Caster>[]>;
+    category?: Nullable<BookCategory>;
+    film?: Nullable<ObjFileOutput>;
+    trailer?: Nullable<ObjFileOutput>;
 }
 
 export class Pagination {

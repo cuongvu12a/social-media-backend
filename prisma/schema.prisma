@@ -21,6 +21,8 @@ enum FileCategory {
   EBOOK
   MEDIA
   MAIN_PHOTO
+  FILM
+  TRAILER
 }
 
 model Account {
@@ -61,6 +63,12 @@ model File {
   postId              String?
   post                Post?            @relation(fields: [postId], references: [id])
 
+  casterId              String?       @unique
+  caster                Caster?       @relation(fields: [casterId], references: [id])
+
+  filmId              String?      
+  film                Film?           @relation(fields: [filmId], references: [id])  
+
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt
   deletedAt           DateTime?
@@ -72,6 +80,7 @@ model Author {
 
   books               Book[]
   posts               Post[]
+  films               Film[]
   file                File?
 
   createdAt           DateTime        @default(now())
@@ -143,4 +152,63 @@ model Post {
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @updatedAt
   deletedAt           DateTime?
+}
+
+model Caster {
+  id                  String  @id @default(uuid())
+  name                String
+
+  file                File?
+
+  CastingFilm         CastingFilm[]
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?  
+}
+
+model Film {
+  id                  String  @id @default(uuid())
+  title               String
+  subTitle            String
+  description          String
+
+  releaseAt           DateTime?
+
+  filmCategoryId      String?
+  filmCategory        FilmCategory? @relation(fields: [filmCategoryId], references: [id])
+
+  CastingFilm         CastingFilm[]
+  files               File[]
+
+  authorId            String?
+  author              Author? @relation(fields: [authorId], references: [id])
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model CastingFilm {
+  id                  String  @id @default(uuid())
+
+  casterId            String  
+  caster              Caster  @relation(fields: [casterId], references: [id])
+
+  filmId            String  
+  film              Film  @relation(fields: [filmId], references: [id])
+}
+
+model FilmCategory {
+  id       String         @id @default(uuid())
+  parentId String?
+  name     String?
+
+  parent   FilmCategory?  @relation("parentFilmCategory", fields: [parentId], references: [id])
+  children FilmCategory[] @relation("parentFilmCategory")
+  films    Film[]         
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?  
 }

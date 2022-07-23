@@ -34,3 +34,19 @@ enum GetListPostOrderBy {
   "CREATED_AT"
   CREATED_AT
 }
+
+
+enum GetListFilmOrderBy {
+  "TITLE"
+  TITLE
+  "SUBTITLE"
+  SUBTITLE
+  "AUTHOR"
+  AUTHOR
+  "CATEGORY"
+  CATEGORY
+  "RELEASE_AT"
+  RELEASE_AT
+  "CREATED_AT"
+  CREATED_AT
+}

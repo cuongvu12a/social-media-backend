@@ -150,29 +150,29 @@ export class BookResolver {
     try {
       const { authorId, categoryId, publishId, thumbnail, ebook } = data;
 
-      if (!authorId) {
+      if (!!authorId) {
         const author = await this.prisma.author.findFirst({
           where: {
             id: authorId,
           },
         });
-        if (!!author) throw new Exception(ERROR.AUTHOR_NOT_FOUND);
+        if (!author) throw new Exception(ERROR.AUTHOR_NOT_FOUND);
       }
-      if (!categoryId) {
+      if (!!categoryId) {
         const bookCategory = await this.prisma.bookCategory.findFirst({
           where: {
             id: categoryId,
           },
         });
-        if (!!bookCategory) throw new Exception(ERROR.BOOK_CATEGORY_NOT_FOUND);
+        if (!bookCategory) throw new Exception(ERROR.BOOK_CATEGORY_NOT_FOUND);
       }
-      if (!publishId) {
+      if (!!publishId) {
         const publisher = await this.prisma.publisher.findFirst({
           where: {
             id: publishId,
           },
         });
-        if (!!publisher) throw new Exception(ERROR.PUBLISHER_NOT_FOUND);
+        if (!publisher) throw new Exception(ERROR.PUBLISHER_NOT_FOUND);
       }
       const identityNumber = await this.bookService.makeBookIdentityNumber();
 
