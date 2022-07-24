@@ -183,21 +183,9 @@ export class BookResolver {
           content: data.content,
           numberOfPages: data.numberOfPages,
           releaseAt: data.releaseAt,
-          author: {
-            connect: {
-              id: authorId,
-            },
-          },
-          bookCategory: {
-            connect: {
-              id: categoryId,
-            },
-          },
-          publisher: {
-            connect: {
-              id: publishId,
-            },
-          },
+          authorId,
+          bookCategoryId: categoryId,
+          publishId: publishId,
         },
         thumbnail: !thumbnail
           ? null

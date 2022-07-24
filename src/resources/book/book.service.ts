@@ -28,7 +28,7 @@ interface FindBooksParams {
 }
 
 interface CreateBookParams {
-  data: Prisma.BookCreateInput;
+  data: Prisma.BookCreateInput | Prisma.BookUncheckedCreateInput;
   thumbnail?: Prisma.FileCreateInput;
   ebook?: Prisma.FileCreateInput;
 }
